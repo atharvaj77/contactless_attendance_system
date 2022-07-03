@@ -1,6 +1,6 @@
 import 'package:contactless_attendance_system/constant/color_data.dart';
 import 'package:contactless_attendance_system/helpers/auth_helper.dart';
-import 'package:contactless_attendance_system/screens/student/student_login.dart';
+import 'package:contactless_attendance_system/screens/student/auth/student_login.dart';
 import 'package:contactless_attendance_system/screens/teacher/auth/teacher_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';

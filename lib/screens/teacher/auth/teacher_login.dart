@@ -4,7 +4,6 @@ import 'package:contactless_attendance_system/helpers/database_helper.dart';
 import 'package:contactless_attendance_system/screens/teacher/auth/teacher_signup.dart';
 import 'package:contactless_attendance_system/screens/teacher/teacher_home.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TeacherLogin extends StatefulWidget {
   const TeacherLogin({Key? key}) : super(key: key);

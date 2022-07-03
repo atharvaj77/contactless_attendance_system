@@ -99,6 +99,34 @@ class _RecordViewState extends State<RecordView> {
                                                               FontWeight.bold,
                                                         ),
                                                       ),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            _databaseHelper
+                                                                .deleteSessionsofClass(
+                                                                    widget
+                                                                        .sectionName,
+                                                                    snapshot
+                                                                        .data!
+                                                                        .docs[
+                                                                            index]
+                                                                        .id)
+                                                                .then((_) {
+                                                              setState(() {
+                                                                _loadSessions();
+                                                              });
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      const SnackBar(
+                                                                          content:
+                                                                              Text('Session deleted successfully!')));
+                                                            });
+                                                          },
+                                                          icon: Icon(
+                                                            Icons.delete,
+                                                            color: Colors.white,
+                                                          ))
                                                     ]))))));
                           }))
                       : Container();
@@ -121,11 +149,12 @@ class _RecordViewState extends State<RecordView> {
                           padding: EdgeInsets.all(10),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 'Create Session',
                                 style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     color: ColorData.teacherColor,
                                     fontSize: 20),
                               ),
@@ -142,7 +171,7 @@ class _RecordViewState extends State<RecordView> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             ElevatedButton(
@@ -151,59 +180,62 @@ class _RecordViewState extends State<RecordView> {
                                     .searchSessionsofClassget(
                                         widget.sectionName,
                                         _nameEditingController.text)
-                                    .then((val) {
-                                  val.exists
-                                      ? ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  'Session with same name already exists')))
-                                      : _databaseHelper.createSession(
-                                          widget.sectionName,
-                                          _nameEditingController.text);
-                                });
-                                setState(() {
-                                  _loadSessions();
-                                });
-                                Navigator.of(context).pop();
-
-                                String qrData = widget.sectionName +
-                                    '/' +
-                                    _nameEditingController
-                                        .text; // 'csb/29-06-2022'
-
-                                final key =
-                                    encrypt.Key.fromUtf8('VITisbestCollege');
-                                final iv = encrypt.IV.fromLength(16);
-                                final encrypter =
-                                    encrypt.Encrypter(encrypt.AES(key));
-                                final encryptedQR =
-                                    encrypter.encrypt(qrData, iv: iv);
-                                final decryptedQR =
-                                    encrypter.decrypt(encryptedQR, iv: iv);
-
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Dialog(
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              QrImage(
-                                                data: encryptedQR.base64,
-                                              ),
-                                              ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    _databaseHelper
-                                                        .disactivateSession(
-                                                            widget.sectionName,
-                                                            _nameEditingController
-                                                                .text);
-                                                  },
-                                                  child: const Text('Done'))
-                                            ]),
-                                      );
+                                    .then((var val) {
+                                  if (val.exists) {
+                                    Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Session with same name already exists!')));
+                                  } else {
+                                    _databaseHelper.createSession(
+                                        widget.sectionName,
+                                        _nameEditingController.text);
+                                    setState(() {
+                                      _loadSessions();
                                     });
+                                    Navigator.of(context).pop();
+
+                                    String qrData = widget.sectionName +
+                                        '/' +
+                                        _nameEditingController
+                                            .text; // 'csb/29-06-2022'
+
+                                    final key = encrypt.Key.fromUtf8(
+                                        'VITisbestCollege');
+                                    final iv = encrypt.IV.fromLength(16);
+                                    final encrypter =
+                                        encrypt.Encrypter(encrypt.AES(key));
+                                    final encryptedQR =
+                                        encrypter.encrypt(qrData, iv: iv);
+
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  QrImage(
+                                                    data: encryptedQR.base64,
+                                                  ),
+                                                  ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        _databaseHelper
+                                                            .disactivateSession(
+                                                                widget
+                                                                    .sectionName,
+                                                                _nameEditingController
+                                                                    .text);
+                                                      },
+                                                      child: const Text('Done'))
+                                                ]),
+                                          );
+                                        });
+                                  }
+                                });
                               },
                               style: ButtonStyle(
                                 backgroundColor:
@@ -216,7 +248,7 @@ class _RecordViewState extends State<RecordView> {
                       );
                     });
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,

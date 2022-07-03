@@ -85,6 +85,15 @@ class _AttendanceViewState extends State<AttendanceView> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
+                                                      snapshot
+                                                          .data!.docs[index].id,
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
                                                       snapshot.data!.docs[index]
                                                           ['studentName'],
                                                       style: const TextStyle(

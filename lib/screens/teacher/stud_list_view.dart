@@ -31,6 +31,9 @@ class _StudentListViewState extends State<StudentListView> {
 
   @override
   void initState() {
+    setState(() {
+      _isLoading = true;
+    });
     _loadStudentData();
     super.initState();
   }
@@ -73,6 +76,13 @@ class _StudentListViewState extends State<StudentListView> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
+                                                  snapshot.data!.docs[index].id,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
                                                   snapshot.data!.docs[index]
                                                       ['studentName'],
                                                   style: const TextStyle(
@@ -80,14 +90,27 @@ class _StudentListViewState extends State<StudentListView> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                Icon(
-                                                  Icons.delete,
-                                                  color: Colors.white,
-                                                )
+                                                IconButton(
+                                                    onPressed: () {
+                                                      _databaseHelper
+                                                          .deleteStudentfromSection(
+                                                              widget
+                                                                  .sectionName,
+                                                              snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.white,
+                                                    ))
                                               ]))))));
                     }));
               },
             ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet(

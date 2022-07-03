@@ -1,11 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:contactless_attendance_system/helpers/database_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -144,24 +141,16 @@ class _QRScanState extends State<QRScan> {
                           .get()
                           .then((QuerySnapshot value) => {
                                 value.docs.forEach((element) {
-                                  print(element.id);
                                   //element.reference.update({'attending': true});
                                   _databaseHelper.markStudentAttendance(
                                       sectionName, sessionName, element.id);
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Attendance Marked successfully for $sessionName!')));
                                 })
                               });
-
-                      _databaseHelper
-                          .getStudentInfoByEmail(
-                              FirebaseAuth.instance.currentUser!.email!)
-                          .then((var value) {
-                        value.docs.forEach((element) {
-                          _databaseHelper.markStudentAttendance(
-                              sectionName, sessionName, element.id);
-                        });
-
-                        Navigator.of(context).pop();
-                      });
                     },
                     style: ButtonStyle(
                         backgroundColor:

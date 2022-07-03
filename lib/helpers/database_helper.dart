@@ -75,6 +75,15 @@ class DatabaseHelper {
         .get();
   }
 
+  deleteSessionsofClass(String sectionName, String sessionId) async {
+    return await FirebaseFirestore.instance
+        .collection('Attendance')
+        .doc(sectionName)
+        .collection('Sessions')
+        .doc(sessionId)
+        .delete();
+  }
+
   createSession(String sectionName, String sessionId) {
     FirebaseFirestore.instance
         .collection('Attendance')
@@ -133,6 +142,15 @@ class DatabaseHelper {
         .collection('Students')
         .doc(rollNo)
         .set({'studentName': studentName, 'studentEmail': studentEmail});
+  }
+
+  deleteStudentfromSection(String sectionName, String rollNo) async {
+    return await FirebaseFirestore.instance
+        .collection('Sections')
+        .doc(sectionName)
+        .collection('Students')
+        .doc(rollNo)
+        .delete();
   }
 
   getAttendanceStatus(String sectionName, String sessionId) async {
