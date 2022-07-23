@@ -121,7 +121,7 @@ class _StudentListViewState extends State<StudentListView> {
                           padding: EdgeInsets.all(10),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 'Add Student',
@@ -179,8 +179,13 @@ class _StudentListViewState extends State<StudentListView> {
                                       _rollNoEditingController.text,
                                       _nameEditingController.text,
                                       _emailEditingController.text);
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Student ${_nameEditingController.text} added!')));
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Add student',
                                 ))
                           ]),

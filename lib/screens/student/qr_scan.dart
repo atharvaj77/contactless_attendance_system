@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:contactless_attendance_system/constant/color_data.dart';
 import 'package:contactless_attendance_system/helpers/database_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -141,10 +142,45 @@ class _QRScanState extends State<QRScan> {
                           .get()
                           .then((QuerySnapshot value) => {
                                 value.docs.forEach((element) {
-                                  //element.reference.update({'attending': true});
                                   _databaseHelper.markStudentAttendance(
                                       sectionName, sessionName, element.id);
                                   Navigator.of(context).pop();
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            'Attendance Marked for $sessionName successfully',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          content: SingleChildScrollView(
+                                              child: ListBody(
+                                            children: [
+                                              Image.asset(
+                                                  'assets/images/check.gif')
+                                            ],
+                                          )),
+                                          actions: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton(
+                                                  onPressed: (() =>
+                                                      Navigator.of(context)
+                                                          .pop()),
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(ColorData
+                                                                  .studentColor)),
+                                                  child: const Text('Okay'),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(

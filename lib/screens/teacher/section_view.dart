@@ -1,6 +1,5 @@
 import 'package:contactless_attendance_system/constant/color_data.dart';
 import 'package:contactless_attendance_system/helpers/database_helper.dart';
-import 'package:contactless_attendance_system/screens/teacher/attendance_view.dart';
 import 'package:contactless_attendance_system/screens/teacher/record_view.dart';
 import 'package:contactless_attendance_system/screens/teacher/stud_list_view.dart';
 import 'package:flutter/material.dart';

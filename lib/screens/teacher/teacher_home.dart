@@ -19,7 +19,7 @@ class _TeacherHomeState extends State<TeacherHome> {
   DatabaseHelper _databaseHelper = DatabaseHelper();
   late Stream<QuerySnapshot> sectionsStream;
 
-  TextEditingController _nameEditingController = TextEditingController();
+  final TextEditingController _nameEditingController = TextEditingController();
   AuthHelper _authHelper = AuthHelper();
 
   void loadAllSections() async {
@@ -48,6 +48,7 @@ class _TeacherHomeState extends State<TeacherHome> {
         builder: ((context, snapshot) {
           return snapshot.hasData
               ? ListView.builder(
+                  shrinkWrap: true,
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: ((context, index) {
                     return InkWell(
@@ -83,10 +84,8 @@ class _TeacherHomeState extends State<TeacherHome> {
                                               ),
                                             ]))))));
                   }))
-              : Container(
-                  child: Center(
-                      child: Text('No Sections found. Click + to add section')),
-                );
+              : const Center(
+                  child: Text('No Sections found. Click + to add section'));
         }));
   }
 
@@ -97,6 +96,7 @@ class _TeacherHomeState extends State<TeacherHome> {
             child: Center(child: CircularProgressIndicator()),
           )
         : Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: ColorData.teacherColor,
@@ -114,7 +114,22 @@ class _TeacherHomeState extends State<TeacherHome> {
                     icon: const Icon(Icons.logout, color: Colors.white))
               ],
             ),
-            body: sectionsList(),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Image.asset('assets/images/sessions.jpg'),
+                      const Text(
+                        "Image from Freepik.com",
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  sectionsList(),
+                ],
+              ),
+            ),
             floatingActionButton: FloatingActionButton(
               backgroundColor: ColorData.teacherColor,
               onPressed: () {

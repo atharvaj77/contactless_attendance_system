@@ -1,6 +1,4 @@
 import 'package:contactless_attendance_system/screens/teacher/attendance_view.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:contactless_attendance_system/helpers/database_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,7 +49,7 @@ class _RecordViewState extends State<RecordView> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: ColorData.teacherColor,
-              title: Text(widget.sectionName),
+              title: Text('Session History of ${widget.sectionName}'),
             ),
             body: Container(
               child: StreamBuilder<QuerySnapshot>(
@@ -129,7 +127,11 @@ class _RecordViewState extends State<RecordView> {
                                                           ))
                                                     ]))))));
                           }))
-                      : Container();
+                      : Container(
+                          child: Center(
+                              child: Text(
+                                  'No sessions yet. Tap + to add a session')),
+                        );
                 },
               ),
             ),
@@ -196,10 +198,8 @@ class _RecordViewState extends State<RecordView> {
                                     });
                                     Navigator.of(context).pop();
 
-                                    String qrData = widget.sectionName +
-                                        '/' +
-                                        _nameEditingController
-                                            .text; // 'csb/29-06-2022'
+                                    String qrData =
+                                        '${widget.sectionName}/${_nameEditingController.text}'; // 'csb/29-06-2022'
 
                                     final key = encrypt.Key.fromUtf8(
                                         'VITisbestCollege');

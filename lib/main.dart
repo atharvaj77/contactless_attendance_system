@@ -19,12 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.purple,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Contact-Less Attendance System'),
-        ),
-        body: const WelcomePage(),
-      ),
+      home: WelcomePage(),
     );
   }
 }

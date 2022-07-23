@@ -68,91 +68,135 @@ class _TeacherSignUpState extends State<TeacherSignUp> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
     return _isLoading
         ? Container(
             child: const Center(child: CircularProgressIndicator()),
           )
         : Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               title: const Text('Register as a Teacher'),
               backgroundColor: ColorData.teacherColor,
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                //Image.asset(name)
-                Form(
-                  key: formKey,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 23),
-                    child: Column(
+            body: SingleChildScrollView(
+              child: SizedBox(
+                width: mediaQuery.size.width,
+                height: mediaQuery.size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
                       children: [
-                        TextField(
-                          controller: _nameEditingController,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.portrait),
-                              hintText: 'Please enter your Name',
-                              labelText: 'Name'),
-                        ),
-                        TextField(
-                          controller: _emailEditingController,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.email),
-                              hintText: 'Please enter your email',
-                              labelText: 'Email'),
-                        ),
-                        TextField(
-                          controller: _passwordEditingController,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.password),
-                              hintText: 'Please enter a new password',
-                              labelText: 'Password'),
+                        Image.asset('assets/images/teacher.jpg'),
+                        const Text(
+                          "Designed by pch.vector / Freepik",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: ElevatedButton(
-                        onPressed: signUpTeacher,
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                            )),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
+                    Form(
+                      key: formKey,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 23),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _nameEditingController,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white70,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15, color: Colors.grey[800]),
+                                  prefixIcon: Icon(Icons.portrait),
+                                  hintText: 'Please enter your Name',
+                                  labelText: 'Name'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
+                              controller: _emailEditingController,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white70,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15, color: Colors.grey[800]),
+                                  prefixIcon: Icon(Icons.email),
+                                  hintText: 'Please enter your email',
+                                  labelText: 'Email'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              controller: _passwordEditingController,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white70,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15, color: Colors.grey[800]),
+                                  prefixIcon: Icon(Icons.password),
+                                  hintText: 'Please enter a new password',
+                                  labelText: 'Password'),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
-                        const Text('Already have an account?'),
-                        TextButton(
-                            onPressed: (() =>
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const TeacherLogin())),
+                        SizedBox(
+                          width: 150,
+                          child: ElevatedButton(
+                            onPressed: signUpTeacher,
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.green),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
                                 )),
-                            child: const Text('Login'))
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Already have an account?'),
+                            TextButton(
+                                onPressed: (() =>
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const TeacherLogin())),
+                                    )),
+                                child: const Text('Login'))
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           );
   }

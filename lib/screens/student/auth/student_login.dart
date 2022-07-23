@@ -56,75 +56,117 @@ class _StudentLoginState extends State<StudentLogin> {
 
   @override
   Widget build(BuildContext context) {
+    var _mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Login as a Student'),
         backgroundColor: ColorData.studentColor,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          //Image.asset(name)
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 23),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'Please enter a valid email!',
-                          labelText: 'Email'),
-                      controller: _emailEditingController,
-                    ),
-                    TextField(
-                      controller: _passwordEditingController,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.password),
-                          hintText: 'Please enter your password',
-                          labelText: 'Password'),
-                    ),
-                  ],
-                ),
-              )),
-          Column(
+      body: SingleChildScrollView(
+        child: Container(
+          width: _mediaQuery.size.width,
+          height: _mediaQuery.size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: loginStudent,
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
+              Column(
+                children: [
+                  Image.asset(
+                    'assets/images/student.jpg',
+                    width: _mediaQuery.size.width * 0.8,
+                  ),
+                  const Text(
+                    "Image from Freepik.com",
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 23),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(
+                              fillColor: Colors.white70,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              hintStyle: TextStyle(
+                                  fontSize: 15, color: Colors.grey[800]),
+                              prefixIcon: Icon(Icons.email),
+                              hintText: 'Please enter a valid email!',
+                              labelText: 'Email'),
+                          controller: _emailEditingController,
                         ),
-                      )),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          obscureText: true,
+                          controller: _passwordEditingController,
+                          decoration: InputDecoration(
+                              fillColor: Colors.white70,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              hintStyle: TextStyle(
+                                  fontSize: 15, color: Colors.grey[800]),
+                              prefixIcon: Icon(Icons.password),
+                              hintText: 'Please enter your password',
+                              labelText: 'Password'),
+                        ),
+                      ],
+                    ),
+                  )),
+              Column(
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: loginStudent,
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                          )),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Not registered yet? '),
-                  TextButton(
-                      onPressed: (() => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: ((context) => const StudentSignUp())),
-                          )),
-                      child: const Text('Register'))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Not registered yet? '),
+                      TextButton(
+                          onPressed: (() =>
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const StudentSignUp())),
+                              )),
+                          child: const Text('Register'))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
-              )
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
